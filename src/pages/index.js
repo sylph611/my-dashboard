@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchStockData();
-    const intervalId = setInterval(fetchStockData, 20000);
+    const intervalId = setInterval(fetchStockData, 60000);
     return () => clearInterval(intervalId);
   }, []);
 
