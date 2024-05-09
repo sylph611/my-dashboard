@@ -115,6 +115,9 @@ const calculateXAxisDomain = (stockName) => {
             <p className="stock-company">{stockData.name}</p>
             <p className="stock-price">현재 가격: {stockData.price}</p>
             <div className="investor-trend" dangerouslySetInnerHTML={{ __html: stockData.investorTrendInfo }} />
+            {stockData.news.map((news, newsIndex) => (
+              <div className="investor-trend"><p>{news}</p></div>
+              ))}
           </button>
           <div className={`panel ${expandedIndices.includes(index) ? 'expanded' : ''}`}>
             <LineChart width={400} height={200} key={time} data={priceList[stockData.name] || []}>
