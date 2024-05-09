@@ -16,8 +16,6 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    // priceList가 변경될 때마다 갱신된 데이터를 로그로 출력
-    console.log('Updated priceList:', priceList);
   }, [priceList]);
 
   const fetchStockData = async () => {
@@ -85,18 +83,12 @@ const Dashboard = () => {
   // X축의 범위 계산 함수
 const calculateXAxisDomain = (stockName) => {
   let minX, maxX;
-  console.log('name', stockName);
-  console.log('priceList', priceList[stockName]);
   const priceDataList = priceList[stockName] || [];
   // 모든 주식 종목의 시간 데이터를 모아서 최소값과 최대값을 계산
-    
-  console.log('aaa', priceDataList.length);
   if (priceDataList.length > 0) {
     const firstTime = priceDataList[0].time;
     const lastTime = priceDataList[priceDataList.length - 1].time;
 
-    console.log('aaa', firstTime);
-    console.log('aaa', lastTime);
     // 최소값 계산
     if (!minX || firstTime < minX) {
       minX = firstTime;
@@ -107,10 +99,6 @@ const calculateXAxisDomain = (stockName) => {
       maxX = lastTime;
     }
   }
-
-
-  console.log('minx,maxX : ' , minX, maxX)
-
   // 최소값과 최대값을 반환
   return [minX, maxX];
 };
@@ -142,11 +130,6 @@ const calculateXAxisDomain = (stockName) => {
         </li>
       ))}
     </ul>
-        {/* 화면 하단에 priceList를 JSON 형태로 출력 */}
-        <div className="price-list">
-          <h2>Price List</h2>
-          <pre>{JSON.stringify(priceList, null, 2)}</pre>
-        </div>
     </div>
 
           
