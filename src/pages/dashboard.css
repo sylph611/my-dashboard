@@ -1,0 +1,74 @@
+.dashboard-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.update-time {
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.stock-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stock-item {
+  border-bottom: 1px solid #eee;
+  padding: 20px 0;
+}
+
+.stock-company {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.stock-price {
+  font-size: 16px; /* 폰트 크기를 늘림 */
+  font-weight: bold; /* 폰트 굵기를 강조 */
+  color: #007bff; /* 파란색으로 강조 */
+}
+
+.accordion {
+  background-color: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.panel {
+  padding: 0 18px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
+}
+
+.panel.expanded {
+  max-height: 200px; /* 아코디언이 펼쳐진 상태에서의 최대 높이 */
+}
+
+.investor-trend {
+  margin-top: 10px;
+  color: #888;
+  font-size: 12px;
+}
