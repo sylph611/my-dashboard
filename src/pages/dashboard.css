@@ -72,3 +72,34 @@
   color: #888;
   font-size: 12px;
 }
+
+.accordion-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.accordion-buttons button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.accordion-buttons button:hover {
+  background-color: #f0f0f0;
+}
+
+.accordion-chart {
+  background-color: #4caf50;
+  color: white;
+}
+
+.accordion-news {
+  background-color: #2196f3;
+  color: white;
+}

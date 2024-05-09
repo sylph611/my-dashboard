@@ -7,6 +7,8 @@ const Dashboard = () => {
   const [stockDataList, setStockDataList] = useState([]);
   const [time, setTime] = useState();
   const [expandedIndices, setExpandedIndices] = useState([]);
+  const [expandedIndicesInfo, setExpandedIndicesInfo] = useState([]);
+  const [expandedIndicesNews, setExpandedIndicesNews] = useState([]);
   const [priceList, setPriceList] = useState([]);
 
   useEffect(() => {
@@ -45,11 +47,33 @@ const Dashboard = () => {
     });
   };
 
+  const toggle = (index) => {
+    toggleAccordionInfo(index);
+    toggleAccordion(index);
+    toggleAccordionNews(index);
+  };
+
+  const toggleAccordionInfo = (index) => {
+    if (expandedIndicesInfo.includes(index)) {
+      setExpandedIndicesInfo(expandedIndicesInfo.filter((i) => i !== index));
+    } else {
+      setExpandedIndicesInfo([...expandedIndicesInfo, index]);
+    }
+  };
+
   const toggleAccordion = (index) => {
     if (expandedIndices.includes(index)) {
       setExpandedIndices(expandedIndices.filter((i) => i !== index));
     } else {
       setExpandedIndices([...expandedIndices, index]);
+    }
+  };
+
+  const toggleAccordionNews = (index) => {
+    if (expandedIndicesNews.includes(index)) {
+      setExpandedIndicesNews(expandedIndicesNews.filter((i) => i !== index));
+    } else {
+      setExpandedIndicesNews([...expandedIndicesNews, index]);
     }
   };
 
@@ -111,13 +135,18 @@ const calculateXAxisDomain = (stockName) => {
     <ul className="stock-list">
       {stockDataList.map((stockData, index) => (
         <li key={index} className="stock-item">
-          <button className="accordion" onClick={() => toggleAccordion(index)}>
+          <button className="accordion" onClick={() => toggle(index)}>
             <p className="stock-company">{stockData.name}</p>
             <p className="stock-price">현재 가격: {stockData.price}</p>
+          </button>
+          <button className="accordion" onClick={() => toggleAccordionInfo(index)}>
+            거래원정보 보기
+          </button>
+          <div className={`panel ${expandedIndicesInfo.includes(index) ? 'expanded' : ''}`}>
             <div className="investor-trend" dangerouslySetInnerHTML={{ __html: stockData.investorTrendInfo }} />
-            {stockData.news.map((news, newsIndex) => (
-              <div className="investor-trend"><p>{news}</p></div>
-              ))}
+          </div>
+          <button className="accordion" onClick={() => toggleAccordion(index)}>
+            차트보기
           </button>
           <div className={`panel ${expandedIndices.includes(index) ? 'expanded' : ''}`}>
             <LineChart width={400} height={200} key={time} data={priceList[stockData.name] || []}>
@@ -130,6 +159,15 @@ const calculateXAxisDomain = (stockName) => {
               <Scatter dataKey="price" fill="#8884d8" />
             </LineChart>
           </div>
+          <button className="accordion" onClick={() => toggleAccordionNews(index)}>
+            뉴스보기
+          </button>
+          <div className={`panel ${expandedIndicesNews.includes(index) ? 'expanded' : ''}`}>
+            {stockData.news.map((news, newsIndex) => (
+              <div className="investor-trend"><p>{news}</p></div>
+            ))}
+          </div>
+          
         </li>
       ))}
     </ul>
