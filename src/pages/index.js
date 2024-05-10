@@ -10,15 +10,19 @@ const Dashboard = () => {
   const [expandedIndicesInfo, setExpandedIndicesInfo] = useState([]);
   const [expandedIndicesNews, setExpandedIndicesNews] = useState([]);
   const [priceList, setPriceList] = useState([]);
+  const [autoRefresh, setAutoRefresh] = useState(true); // 자동 갱신 상태
 
   useEffect(() => {
     fetchStockData();
-    const intervalId = setInterval(fetchStockData, 60000);
-    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
-  }, [priceList]);
+    if (autoRefresh) {
+      const intervalId = setInterval(fetchStockData, 60000);
+      return () => clearInterval(intervalId);
+    }
+  }, [autoRefresh]);
+
 
   const fetchStockData = async () => {
     try {
@@ -46,6 +50,11 @@ const Dashboard = () => {
       return newPriceList;
     });
   };
+
+  const toggleAutoRefresh = () => {
+    setAutoRefresh(!autoRefresh);
+  };
+
 
   const toggle = (index) => {
     toggleAccordionInfo(index);
@@ -81,8 +90,7 @@ const Dashboard = () => {
     const date = new Date(timeString);
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}`;
   };
 
   // 최근 시간의 주식 가격을 중간에 위치하도록 y축 범위 계산
@@ -132,12 +140,21 @@ const calculateXAxisDomain = (stockName) => {
     <div className="dashboard-container">
     <h1 className="dashboard-title">실시간 주식 정보</h1>
     <p className="update-time">최근 업데이트: {time}</p>
+    <div className="refresh-toggle">
+      <div className="current-status">
+        현재 상태: {autoRefresh ? '켜짐' : '꺼짐'}
+      </div>
+      <button onClick={toggleAutoRefresh}>
+        {autoRefresh ? '자동 갱신 끄기' : '자동 갱신 켜기'}
+      </button>
+    </div>
     <ul className="stock-list">
       {stockDataList.map((stockData, index) => (
         <li key={index} className="stock-item">
           <button className="accordion" onClick={() => toggle(index)}>
             <p className="stock-company">{stockData.name}</p>
-            <p className="stock-price">현재 가격: {stockData.price}</p>
+            <p className="stock-price">현재 가격: {stockData.price.toLocaleString()}　<div className="" dangerouslySetInnerHTML={{ __html: stockData.priceChangeFlag }} /> </p> 
+            {/* <p className="stock-price">평가 손익: {stockData.profitLoss.toLocaleString()} 원 </p> */}
           </button>
           <button className="accordion" onClick={() => toggleAccordionInfo(index)}>
             거래원정보 보기
